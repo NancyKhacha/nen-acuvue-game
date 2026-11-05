@@ -44,6 +44,17 @@
     <circle cx="262" cy="120" r="18" fill="#CBE880"/>
     <circle cx="266" cy="160" r="18" fill="#FFB548"/>
   </symbol>
+  <!-- Короткий вариант: три дорожки -->
+  <symbol id="paths3" viewBox="0 56 190 150">
+    <g stroke-linecap="round" stroke-width="22" fill="none">
+      <line x1="16"  y1="190" x2="126" y2="80"  stroke="#685BC7"/>
+      <line x1="60"  y1="190" x2="110" y2="140" stroke="#FFB548"/>
+      <line x1="104" y1="190" x2="164" y2="130" stroke="#FB5373"/>
+    </g>
+    <circle cx="126" cy="80"  r="18" fill="#CBE880"/>
+    <circle cx="110" cy="140" r="18" fill="#B9DBE5"/>
+    <circle cx="164" cy="130" r="18" fill="#685BC7"/>
+  </symbol>
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-hint" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="m15.5 15.5 5 5" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/></symbol>
   <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M16 5.5A2.5 2.5 0 0 0 13.5 3h-8A2.5 2.5 0 0 0 3 5.5v8A2.5 2.5 0 0 0 5.5 16" fill="none" stroke="currentColor" stroke-width="2.4"/></symbol>
@@ -122,13 +133,20 @@
 
   <!-- ПРАВАЯ ЧАСТЬ: только картинка -->
   <main class="stage" id="stage">
-    <svg class="deco-paths" aria-hidden="true"><use href="#paths"/></svg>
     <div class="scene" id="scene">
       <img class="scene__img" id="sceneImg" src="assets/cover.webp" alt="Родители и двое детей на площадке рассматривают божью коровку через лупу" draggable="false">
       <div class="scene__marks" id="marks"></div>
       <div class="scene__finalword" id="finalWord" aria-hidden="true"></div>
     </div>
   </main>
+
+  <!-- Декор на десктопе: дорожки Abiliti целиком, в свободных полях вокруг игры -->
+  <div class="deco" aria-hidden="true">
+    <svg class="deco__item deco__item--lt"><use href="#paths"/></svg>
+    <svg class="deco__item deco__item--lb"><use href="#paths3"/></svg>
+    <svg class="deco__item deco__item--rt"><use href="#paths3"/></svg>
+    <svg class="deco__item deco__item--rb"><use href="#paths"/></svg>
+  </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <div class="confetti" id="confetti" aria-hidden="true"></div>

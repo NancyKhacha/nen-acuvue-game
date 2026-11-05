@@ -538,7 +538,7 @@
     const box = $('confetti');
     box.innerHTML = '';
     const colors = ['#FB5373', '#FFB548', '#CBE880', '#B9DBE5', '#685BC7', '#FFADBF'];
-    const deskLeft = isDesk() ? box.clientWidth * 0.3 : 0;
+    const deskLeft = 0;
     for (let i = 0; i < 70; i++) {
       const sp = document.createElement('span');
       const bar = Math.random() < 0.45;
