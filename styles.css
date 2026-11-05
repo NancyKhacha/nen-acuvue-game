@@ -7,6 +7,9 @@
   --lav: #EEEBFD;
   --pink: #FB5373;
   --orange: #FFB548;
+  --btn: #FFB548;          /* главная кнопка — оранжевый Abiliti, ярче фиолетовой шапки */
+  --btn-hover: #FFA42E;
+  --btn-ink: #3C3871;
   --green: #CBE880;
   --lgreen: #E0F5B8;
   --blue: #B9DBE5;
@@ -45,6 +48,7 @@ img { display: block; }
   color: var(--dpurple);
 }
 .lead { margin: 0 0 16px; font-size: 15.5px; line-height: 1.48; }
+.lead--q { margin-bottom: 8px; font-weight: 800; color: var(--dpurple); }
 .legal { margin: 0; font-size: 10.5px; line-height: 1.35; color: var(--muted); }
 
 /* ---------- Кнопки: компактные, без теней ---------- */
@@ -53,8 +57,8 @@ img { display: block; }
   height: 46px;
   padding: 0 18px 0 22px;
   border: 0; border-radius: 999px;
-  background: var(--purple);
-  color: #fff;
+  background: var(--btn);
+  color: var(--btn-ink);
   font-size: 16px; font-weight: 800; line-height: 1;
   text-decoration: none; white-space: nowrap;
   cursor: pointer;
@@ -62,10 +66,12 @@ img { display: block; }
   transition: background .2s ease, transform .1s ease;
 }
 .btn svg { width: 18px; height: 18px; flex: none; transition: transform .2s ease; }
-.btn:hover { background: var(--purple-hover); }
+.btn:hover { background: var(--btn-hover); }
 .btn:hover svg { transform: translateX(3px); }
 .btn:active { transform: scale(.97); }
-.btn:focus-visible, .hint-btn:focus-visible, .ghost-btn:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+.btn:focus-visible, .hint-btn:focus-visible, .ghost-btn:focus-visible { outline: 3px solid var(--purple); outline-offset: 3px; }
+/* На первом и последнем экране кнопка по центру, во всю ширину текста */
+.btn--wide { display: flex; width: 100%; }
 .btn--sm { height: 42px; padding: 0 13px 0 17px; gap: 8px; font-size: 15px; }
 
 .hint-btn, .ghost-btn {
@@ -277,7 +283,7 @@ img { display: block; }
   background: #fff;
   pointer-events: auto;
 }
-.word { display: flex; justify-content: center; gap: 5px; }
+.word { display: flex; justify-content: center; gap: 5px; user-select: none; -webkit-user-select: none; }
 .slot {
   flex: 0 1 38px;
   height: 42px;
@@ -380,7 +386,8 @@ img { display: block; }
 }
 @keyframes tileDrop { from { opacity: 0; transform: translateY(-30px) rotate(-14deg) scale(.6); } to { opacity: 1; transform: none; } }
 .promo__code { display: none; }
-.final__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-bottom: 14px; }
+.final__actions { display: flex; flex-direction: column; align-items: stretch; gap: 6px; margin-bottom: 14px; }
+.final__actions .link-btn { align-self: center; }
 
 /* Тост */
 .toast {
@@ -410,6 +417,13 @@ img { display: block; }
   animation: fall var(--d) cubic-bezier(.25, .6, .5, 1) var(--delay) forwards;
 }
 @keyframes fall { 0% { transform: translate(0, 0) rotate(0); } 100% { transform: translate(var(--x), 110vh) rotate(var(--r)); } }
+
+/* Невысокие телефоны: текст первого экрана плотнее, чтобы семья на обложке не пряталась под карточкой */
+@media (max-height: 700px) and (max-width: 959px) {
+  .view--start .lead { font-size: 14.5px; line-height: 1.42; margin-bottom: 12px; }
+  .view--start .lead--q { margin-bottom: 6px; }
+  .view--start { padding: 16px 16px 16px; }
+}
 
 @media (max-width: 359px) {
   .slot { height: 38px; font-size: 20px; }
@@ -482,6 +496,7 @@ img { display: block; }
   }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
   .lead { font-size: 17px; line-height: 1.55; margin-bottom: 24px; }
+  .lead--q { margin-bottom: 12px; }
   .title-l { font-size: 32px; margin-bottom: 16px; }
 
   .app[data-view="game"] .view--game { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; margin-top: 18px; }

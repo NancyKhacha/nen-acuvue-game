@@ -154,18 +154,19 @@
     letterCard: new Map(),  // буква → индекс карточки
     openCard: null,
     hintTimer: null,
-    idleTimer: null
+    idleTimer: null,
+    pendingToast: null      // на телефоне тост ждет, пока закроют карточку
   };
 
   const fieldFoundCount = (f) => FIELDS[f].letters.filter((l) => state.found.has(l.slot)).length;
   const fieldDone = (f) => fieldFoundCount(f) === FIELDS[f].letters.length;
+  const allFound = () => state.found.size === WORD.length;
 
   /* ===== Слово-промокод ===== */
 
   const slots = [...WORD].map((ch, i) => {
     const el = document.createElement('span');
     el.className = 'slot';
-    el.textContent = ch;
     el.style.setProperty('--bg-tile', TILE[i].bg);
     el.style.setProperty('--ink-tile', TILE[i].ink);
     word.appendChild(el);
@@ -179,7 +180,12 @@
   }
 
   function renderWord() {
-    slots.forEach((el, i) => el.classList.toggle('is-on', state.found.has(i)));
+    // Буква попадает в разметку только после находки: выделение текста ничего не подскажет
+    slots.forEach((el, i) => {
+      const on = state.found.has(i);
+      el.classList.toggle('is-on', on);
+      el.textContent = on ? WORD[i] : '';
+    });
     const n = state.found.size;
     $('counter').textContent = n === 0 ? 'Найдите 8 букв' : foundText(n);
   }
@@ -289,6 +295,7 @@
   }
 
   function startGame() {
+    state.pendingToast = null;
     state.found.clear();
     state.letterCard.clear();
     state.field = 0;
@@ -306,7 +313,11 @@
       renderMarks();
       requestAnimationFrame(() => { measure(); centerLetters(); });
     });
-    if (!first) toast('Еще 4 буквы спрятались в детской');
+    if (!first) {
+      const msg = 'Еще 4 буквы спрятались в детской';
+      if (isDesk()) toast(msg, 3400);
+      else state.pendingToast = msg;
+    }
     resetIdle();
   }
 
@@ -375,6 +386,8 @@
 
     fly(l.ch, l.slot, cx, cy, () => {
       renderWord();
+      // Площадка пройдена: сразу открываем детскую, не дожидаясь кнопки в карточке
+      if (state.field === 0 && fieldDone(0)) setField(1);
       openCard(cardIdx, l);
     });
   }
@@ -422,9 +435,7 @@
       return `<p><b>${n === '*' ? '*' : n + '.'}</b> ${NOTES[n]}</p>`;
     }).join('') + `<p class="warn">${WARN}</p>`;
 
-    const done = fieldDone(state.field);
-    $('cardBtnText').textContent = !done ? 'Искать дальше'
-      : state.field === 0 ? 'В детскую комнату' : 'Забрать промокод';
+    $('cardBtnText').textContent = allFound() ? 'Забрать промокод' : 'Искать дальше';
 
     const wasOpen = !card.hidden;
     card.hidden = false;
@@ -444,6 +455,11 @@
 
   let closeT;
   function closeCard(instant = false) {
+    if (!instant && state.pendingToast) {
+      const msg = state.pendingToast;
+      state.pendingToast = null;
+      setTimeout(() => toast(msg, 3000), 300);
+    }
     state.openCard = null;
     app.classList.remove('card-open');
     backdrop.classList.remove('is-on');
@@ -454,13 +470,9 @@
   }
 
   function onCardBtn() {
-    if (!fieldDone(state.field)) { closeCard(); resetIdle(); return; }
-    if (state.field === 0) {
-      closeCard();
-      setField(1);
-    } else {
-      setView('final');
-    }
+    if (allFound()) { setView('final'); return; }
+    closeCard();
+    resetIdle();
   }
 
   /* ===== Подсказка ===== */
@@ -589,7 +601,7 @@
   scene.addEventListener('click', onSceneClick);
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && state.openCard !== null && !fieldDone(state.field)) closeCard();
+    if (e.key === 'Escape' && state.openCard !== null && !allFound()) closeCard();
   });
 
   const onResize = () => { measure(); coverShift(); };
