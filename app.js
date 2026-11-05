@@ -125,6 +125,30 @@
   const COVER = { img: 'assets/cover.webp', alt: 'Родители и двое детей на площадке рассматривают божью коровку через лупу' };
   const FINAL = { img: 'assets/final.webp', alt: 'Пустая площадка в парке: плед для пикника, воздушные шары, горка' };
 
+  /* ===== Типографика: без висячих предлогов ===== */
+  // Короткие слова привязываем неразрывным пробелом к следующему, тире — к предыдущему.
+  // Слова не меняются: тексты карточек остаются дословно как в доке, меняются только пробелы при выводе.
+  const SHORT = '[А-Яа-яЁёA-Za-z]{1,2}|без|для|над|под|при|про|или|что|как|Без|Для|Над|Под|При|Про|Или|Что|Как';
+  const reShort = new RegExp('(^|[\\s\\u00A0(«„"])(' + SHORT + ') +', 'g');
+  function typo(str) {
+    let prev;
+    do { prev = str; str = str.replace(reShort, '$1$2 '); } while (str !== prev);
+    return str
+      .replace(/ +([—–])/g, ' $1')
+      .replace(/ +(ли|же|бы)(?=[\s.,!?:;)]|$)/g, ' $1')
+      .replace(/(\d) +(?=[А-Яа-яЁёA-Za-z%])/g, '$1 ');
+  }
+  function typoTree(root) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    let n;
+    while ((n = walker.nextNode())) {
+      const tag = n.parentNode && n.parentNode.nodeName;
+      if (tag === 'SCRIPT' || tag === 'STYLE') continue;
+      const v = typo(n.nodeValue);
+      if (v !== n.nodeValue) n.nodeValue = v;
+    }
+  }
+
   /* ===== Элементы ===== */
 
   const $ = (id) => document.getElementById(id);
@@ -187,7 +211,7 @@
       el.textContent = on ? WORD[i] : '';
     });
     const n = state.found.size;
-    $('counter').textContent = n === 0 ? 'Найдите 8 букв' : foundText(n);
+    $('counter').textContent = typo(n === 0 ? 'Найдите 8 букв' : foundText(n));
   }
 
   /* ===== Картинка ===== */
@@ -267,7 +291,7 @@
 
   let toastT;
   function toast(text, ms = 2600) {
-    toastEl.textContent = text;
+    toastEl.textContent = typo(text);
     toastEl.classList.add('is-on');
     clearTimeout(toastT);
     toastT = setTimeout(() => toastEl.classList.remove('is-on'), ms);
@@ -436,6 +460,7 @@
     }).join('') + `<p class="warn">${WARN}</p>`;
 
     $('cardBtnText').textContent = allFound() ? 'Забрать промокод' : 'Искать дальше';
+    typoTree(card);
 
     const wasOpen = !card.hidden;
     card.hidden = false;
@@ -619,6 +644,7 @@
   // Прогреваем картинки
   [FIELDS[0].img, FIELDS[1].img, FINAL.img, 'assets/packshot.webp'].forEach((src) => { const i = new Image(); i.src = src; });
 
+  typoTree(document.body);
   renderWord();
   coverShift();
   setTimeout(coverShift, 700); // после анимации карточки и загрузки шрифта

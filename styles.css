@@ -437,7 +437,8 @@ img { display: block; }
     --panel-w: clamp(340px, 29vw, 420px);
     --gap: clamp(36px, 3.6vw, 60px);
     --scene-h: min(calc(100dvh - 64px), 1100px);
-    --scene-w: calc(var(--scene-h) * 899 / 2000);
+    /* Ширина с учетом белой рамки 6 px: внутри рамки ровно пропорции картинки 899×2000, без пустоты снизу */
+    --scene-w: calc((var(--scene-h) - 12px) * 899 / 2000 + 12px);
     --group-w: calc(var(--panel-w) + var(--gap) + var(--scene-w));
     --side: calc((100vw - var(--group-w)) / 2);
     --deco-w: clamp(0px, calc(var(--side) - 56px), 230px);
@@ -547,6 +548,7 @@ img { display: block; }
     border-radius: 28px;
     border: 6px solid #fff;
   }
+  .app[data-view="start"] .scene__img { position: static; height: 100%; transform: none; }
 
   /* Дорожки Abiliti в полях: слева и справа, сверху и снизу. Целиком, не залезают на текст и картинку */
   .deco { display: block; position: fixed; inset: 0; z-index: 0; pointer-events: none; }
