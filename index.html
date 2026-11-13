@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/cover.webp">
-  <link rel="stylesheet" href="styles.css?v=bbac6bee">
+  <link rel="stylesheet" href="styles.css?v=f0be1c17">
 </head>
 <body>
 
@@ -78,8 +78,10 @@
 
     <!-- Первый экран -->
     <div class="view view--start" id="viewStart">
-      <p class="lead lead--q">Не рано ли ребенку линзы? Справится ли он с ними сам? Может ли линза потеряться за глазом?</p>
-      <p class="lead">НЭН вместе с ACUVUE® представляет игру «В поле зрения»: ответы на самые главные вопросы спрятаны в буквах, а буквы — по четыре на детской площадке и в детской комнате. Все латинские, и каждая очень старается не быть буквой. Нашли — нажмите: откроется ответ, а из всех восьми сложится промокод. Если какая-то не находится минут пять — нет, это нормально, мы сами столько искали.</p>
+      <p class="lead lead--q">Не рано ли ребенку линзы? Справится ли он с ними сам? Может ли контактная линза потеряться за глазом?</p>
+      <p class="lead">Вместе с брендом контактных линз ACUVUE® предлагаем проверить себя в игре для родителей «В поле зрения». На площадке и в комнате спрятались восемь латинских букв, и каждая постаралась стать почти незаметной.</p>
+      <p class="lead">Ищите буквы, нажимайте на них и открывайте ответы на важные вопросы о детском зрении. А когда найдете все — они сложатся в промокод. Что с ним делать дальше, расскажем в финале.</p>
+      <p class="lead">Застряли на одной? Не переживайте: возможно, она просто хорошо вошла в роль. А если поиски совсем затянулись, воспользуйтесь подсказкой.</p>
       <button class="btn btn--wide" id="startBtn" type="button">Искать буквы<svg><use href="#i-arrow"/></svg></button>
     </div>
 
@@ -93,7 +95,6 @@
           <p class="counter" id="counter" aria-live="polite">Найдите 8 букв</p>
           <button class="hint-btn" id="hintBtn" type="button"><svg><use href="#i-hint"/></svg>Подсказка</button>
         </div>
-        <p class="legal legal--bar">Имеются противопоказания. Необходимо проконсультироваться со специалистом.</p>
       </div>
 
       <!-- Попап с карточкой -->
@@ -101,7 +102,7 @@
       <article class="card" id="card" role="dialog" aria-labelledby="cardFound" hidden>
         <div class="card__scroll" id="cardScroll">
           <p class="card__found" id="cardFound">Вы нашли букву M</p>
-          <img class="card__pack" src="assets/packshot.webp" alt="Упаковка ACUVUE® Abiliti 1-Day" width="900" height="329">
+          <img class="card__art" id="cardArt" src="assets/packshot.webp" alt="" width="900" height="329">
           <h2 class="card__title" id="cardTitle"></h2>
           <div class="card__body" id="cardBody"></div>
           <div class="card__notes" id="cardNotes"></div>
@@ -121,15 +122,17 @@
         <p class="promo__code" aria-label="Промокод MYACUVUE">MYACUVUE</p>
         <button class="ghost-btn" id="copyBtn" type="button"><svg><use href="#i-copy"/></svg><span id="copyText">Скопировать промокод</span></button>
       </div>
-      <p class="lead">Все восемь, даже V в вырезе свитера (мы были уверены, что на ней вы сдадитесь). Теперь у вас есть промокод для приложения MyACUVUE®. Там же можно записаться на подбор контактных линз ACUVUE® Abiliti 1-Day* в профильной оптике или клинике — и задать специалисту вопросы, которые не поместились в карточки.</p>
+      <p class="lead">Все восемь, даже V в вырезе свитера (мы были уверены, что на ней вы сдадитесь). Теперь у вас есть промокод для приложения MyACUVUE®**. Там же можно записаться на подбор контактных линз ACUVUE® Abiliti 1-Day* в профильной оптике или клинике — и задать вопросы, которые не поместились в карточки.</p>
       <div class="final__actions">
         <a class="btn btn--wide" id="ctaBtn" href="https://www.myacuvue.acuvue.ru/" target="_blank" rel="noopener">Записаться через MyACUVUE®<svg><use href="#i-arrow"/></svg></a>
         <button class="link-btn" id="replayBtn" type="button">Сыграть еще раз</button>
       </div>
-      <p class="legal">*ACUVUE® Абилити однодневный. Рег.уд. № РЗН 2025/24483.</p>
+      <div class="legal final__notes">
+        <p>*ACUVUE® Абилити однодневный. Рег.уд. № РЗН 2025/24483.</p>
+        <p>**6+ Срок действия Программы MyACUVUE®: 01.11.2018–31.12.2030. Полные правила Программы доступны на <a href="https://www.acuvue.ru" target="_blank" rel="noopener">https://www.acuvue.ru</a>.</p>
+      </div>
     </div>
 
-    <footer class="panel__legal legal">Имеются противопоказания. Необходимо проконсультироваться со специалистом.</footer>
   </section>
 
   <!-- ПРАВАЯ ЧАСТЬ: только картинка -->
@@ -150,9 +153,11 @@
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <!-- Предупреждение о противопоказаниях: на всех экранах, не меньше 5% площади экрана -->
+  <p class="warnbar" id="warnbar">Имеются противопоказания. Необходимо проконсультироваться со специалистом.</p>
   <div class="confetti" id="confetti" aria-hidden="true"></div>
 </div>
 
-<script src="app.js?v=bbac6bee"></script>
+<script src="app.js?v=f0be1c17"></script>
 </body>
 </html>
