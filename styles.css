@@ -409,6 +409,24 @@ sup.reg { position: relative; top: -.55em; font-size: .62em; line-height: 0; ver
 @keyframes tileDrop { from { opacity: 0; transform: translateY(-30px) rotate(-14deg) scale(.6); } to { opacity: 1; transform: none; } }
 .promo__code { display: none; }
 .final__actions { display: flex; flex-direction: column; align-items: stretch; gap: 6px; margin-bottom: 14px; }
+/* Текст финала длинный: кнопка записи прилипает к низу, пока до нее листают */
+.view--final .final__actions {
+  position: sticky; bottom: -14px; z-index: 2;
+  margin: 0 -16px 14px; padding: 10px 16px 14px;
+  background: var(--sticky-bg, #fff);
+  box-shadow: 0 -10px 14px -10px rgba(43, 39, 87, .18);
+}
+/* Как воспользоваться промокодом: три шага с цифрами в кружках */
+.steps { list-style: none; counter-reset: step; margin: 0 0 14px; padding: 0; }
+.steps li { counter-increment: step; position: relative; margin: 0 0 10px; padding-left: 36px; font-size: 15px; line-height: 1.45; }
+.steps li::before {
+  content: counter(step);
+  position: absolute; left: 0; top: -1px;
+  width: 26px; height: 26px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--btn); color: var(--btn-ink);
+  font-size: 14px; font-weight: 900;
+}
 .final__actions .link-btn { align-self: center; }
 
 /* Тост */
@@ -447,6 +465,10 @@ sup.reg { position: relative; top: -.55em; font-size: .62em; line-height: 0; ver
   .view--start .lead { font-size: 14.5px; line-height: 1.4; margin-bottom: 8px; }
   .view--start .lead--q { margin-bottom: 8px; }
   .view--start .btn { margin-top: 6px; }
+  /* Финал на телефоне: длинный текст про промокод — плотнее, карточка прокручивается */
+  .view--final { padding: 18px 16px 14px; }
+  .view--final .lead { font-size: 14.5px; line-height: 1.42; margin-bottom: 10px; }
+  .steps li { font-size: 14.5px; line-height: 1.42; margin-bottom: 8px; }
 }
 @media (max-height: 700px) and (max-width: 959px) {
   .view--start .lead { font-size: 13.5px; line-height: 1.36; margin-bottom: 6px; }
@@ -535,9 +557,11 @@ sup.reg { position: relative; top: -.55em; font-size: .62em; line-height: 0; ver
   .view--start { margin-top: clamp(12px, 2.4vh, 24px); }
   .view--start .lead { font-size: clamp(13px, 1.9vh, 17px); line-height: 1.5; margin-bottom: clamp(8px, 1.4vh, 14px); }
   .view--start .btn { margin-top: clamp(6px, 1.2vh, 12px); }
-  .view--final .lead { font-size: clamp(13px, 1.9vh, 17px); line-height: 1.5; margin-bottom: clamp(12px, 2vh, 24px); }
+  .view--final .lead { font-size: clamp(13px, 1.7vh, 15.5px); line-height: 1.5; margin-bottom: clamp(10px, 1.6vh, 18px); }
   .view--final { margin-top: clamp(12px, 2.4vh, 24px); }
   .view--final .title-l { margin-bottom: clamp(10px, 1.6vh, 16px); }
+  .view--final .steps li { font-size: clamp(13px, 1.7vh, 15.5px); line-height: 1.45; }
+  .view--final .final__actions { --sticky-bg: var(--lav); bottom: -4px; margin: 0 0 14px; padding: 10px 0 8px; }
   /* Картинка в карточке не съедает текст на невысоких экранах */
   .card__art:not(.card__art--pack) { max-height: min(240px, 26vh); }
   .title-l { font-size: 32px; margin-bottom: 16px; }
