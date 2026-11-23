@@ -127,6 +127,18 @@ img { display: block; }
 }
 .stage::-webkit-scrollbar { display: none; }
 .deco { display: none; }
+/* Телефон: графика Abiliti полосой по низу на первом и финальном экранах; карточка лежит поверх ее верхней части.
+   Во время игры полосы нет — там весь экран отдан картинке с буквами. */
+:root { --band-h: calc(100vw * 383 / 1428); --band-show: min(46px, calc(var(--band-h) * .46)); }
+@media (max-width: 959px), (max-height: 599px) {
+  .app[data-view="start"] .deco,
+  .app[data-view="final"] .deco {
+    display: block; position: fixed; left: 0; right: 0; bottom: var(--warn-b);
+    height: var(--band-h); z-index: 5; pointer-events: none;
+    background: var(--lav);   /* ровный фон, как на десктопе: иллюстрация не проглядывает между тьюбами */
+  }
+}
+.deco__band { display: block; width: 100%; height: 100%; }
 
 .scene {
   position: relative;
@@ -268,10 +280,10 @@ img { display: block; }
 
 .view--start, .view--final {
   position: absolute;
-  left: 50%; bottom: calc(var(--warn-b) + 12px);
+  left: 50%; bottom: calc(var(--warn-b) + var(--band-show));
   transform: translateX(-50%);
   width: min(100% - 20px, 520px);
-  max-height: calc(100% - var(--warn-b) - 112px - var(--safe-t));
+  max-height: calc(100% - var(--warn-b) - var(--band-show) - 100px - var(--safe-t));
   overflow-y: auto;
   padding: 20px 18px;
   border-radius: 26px;
@@ -471,6 +483,9 @@ sup.reg { position: relative; top: -.55em; font-size: .62em; line-height: 0; ver
   .steps li { font-size: 14.5px; line-height: 1.42; margin-bottom: 8px; }
 }
 @media (max-height: 700px) and (max-width: 959px) {
+  /* невысокий телефон: полоса тьюбов узкой каемкой, чтобы кнопка первого экрана не уходила за край */
+  :root { --band-show: 16px; }
+  .view--start, .view--final { max-height: calc(100% - var(--warn-b) - var(--band-show) - 94px - var(--safe-t)); }
   .view--start .lead { font-size: 13.5px; line-height: 1.36; margin-bottom: 6px; }
   .view--start .lead--q { margin-bottom: 6px; }
   .view--start { padding: 14px 14px 12px; }
