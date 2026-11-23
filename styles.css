@@ -52,6 +52,10 @@ img { display: block; }
 }
 .lead { margin: 0 0 16px; font-size: 15.5px; line-height: 1.48; }
 .lead--q { margin-bottom: 8px; font-weight: 800; color: var(--dpurple); }
+/* Телефон: первый экран в два шага */
+.app[data-step="q"] .start__more, .app[data-step="q"] #startBtn { display: none; }
+.app[data-step="more"] .view--start .lead--q, .app[data-step="more"] #nextBtn { display: none; }
+.app[data-step="q"] .view--start .lead--q { font-size: 18px; line-height: 1.38; margin-bottom: 14px; }
 .legal { margin: 0; font-size: 10.5px; line-height: 1.35; color: var(--muted); }
 
 /* ---------- Кнопки: компактные, без теней ---------- */
@@ -573,6 +577,10 @@ sup.reg { position: relative; top: -.55em; font-size: .62em; line-height: 0; ver
   .view--start { margin-top: clamp(12px, 2.4vh, 24px); }
   .view--start .lead { font-size: clamp(13px, 1.75vh, 16.5px); line-height: 1.5; margin-bottom: clamp(8px, 1.4vh, 14px); }
   .view--start .btn { margin-top: clamp(6px, 1.2vh, 12px); }
+  .app[data-step] .start__more, .app[data-step] #startBtn { display: block; }
+  .app[data-step] #startBtn { display: flex; }
+  .app[data-step] .view--start .lead--q { display: block; font-size: clamp(13px, 1.75vh, 16.5px); line-height: 1.5; margin-bottom: 12px; }
+  .app[data-step] #nextBtn { display: none; }
   .view--final .lead { font-size: clamp(13px, 1.7vh, 15.5px); line-height: 1.5; margin-bottom: clamp(10px, 1.6vh, 18px); }
   .view--final { margin-top: clamp(12px, 2.4vh, 24px); }
   .view--final .title-l { margin-bottom: clamp(10px, 1.6vh, 16px); }

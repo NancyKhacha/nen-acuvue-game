@@ -314,6 +314,7 @@
     closeCard(true);
     clearHint();
     if (v === 'start') {
+      app.dataset.step = 'q';
       marks.innerHTML = '';
       setScene(COVER.img, COVER.alt);
       requestAnimationFrame(coverShift);
@@ -637,6 +638,15 @@
   /* ===== События ===== */
 
   $('startBtn').addEventListener('click', startGame);
+  // Телефон: с вопросов — к пояснению (обложка та же)
+  $('nextBtn').addEventListener('click', () => {
+    app.dataset.step = 'more';
+    const v = $('viewStart');
+    v.style.animation = 'none'; void v.offsetWidth; v.style.animation = '';
+    v.scrollTop = 0;
+    requestAnimationFrame(coverShift);
+    setTimeout(coverShift, 520);
+  });
   $('replayBtn').addEventListener('click', startGame);
   $('cardBtn').addEventListener('click', onCardBtn);
   $('copyBtn').addEventListener('click', copyPromo);
