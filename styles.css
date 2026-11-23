@@ -369,7 +369,7 @@ img { display: block; }
 }
 .card__title { margin: 0 0 10px; font-size: 19px; line-height: 1.2; font-weight: 900; color: var(--dpurple); }
 .card__body p { margin: 0 0 12px; font-size: 16px; line-height: 1.55; }
-.card__body sup, .card__notes sup { position: relative; top: -.5em; font-size: .68em; line-height: 0; vertical-align: baseline; }
+.card__body sup, .card__notes sup, .view--final sup:not(.reg) { position: relative; top: -.5em; font-size: .68em; line-height: 0; vertical-align: baseline; }
 .card__notes {
   margin: 12px 0 8px;
   padding-top: 12px;
@@ -618,10 +618,10 @@ sup.reg { position: relative; top: -.55em; font-size: .62em; line-height: 0; ver
   /* Дорожки Abiliti в полях: слева и справа, сверху и снизу. Целиком, не залезают на текст и картинку */
   .deco { display: block; position: fixed; inset: 0; z-index: 0; pointer-events: none; }
   .deco__item { position: absolute; display: block; height: auto; }
-  .deco__item--lt { width: var(--deco-w); aspect-ratio: 300 / 160; left: calc((var(--side) - var(--deco-w)) / 2); top: 9vh; }
-  .deco__item--lb { width: calc(var(--deco-w) * .62); aspect-ratio: 190 / 150; left: calc((var(--side) - var(--deco-w) * .62) / 2); bottom: calc(var(--warn-b) + 6vh); }
-  .deco__item--rt { width: calc(var(--deco-w) * .62); aspect-ratio: 190 / 150; right: calc((var(--side) - var(--deco-w) * .62) / 2); top: 12vh; }
-  .deco__item--rb { width: var(--deco-w); aspect-ratio: 300 / 160; right: calc((var(--side) - var(--deco-w)) / 2); bottom: calc(var(--warn-b) + 5vh); }
+  .deco__item--lt { width: var(--deco-w); aspect-ratio: 300 / 180; left: calc((var(--side) - var(--deco-w)) / 2); top: 9vh; }
+  .deco__item--lb { width: calc(var(--deco-w) * .62); aspect-ratio: 190 / 162; left: calc((var(--side) - var(--deco-w) * .62) / 2); bottom: calc(var(--warn-b) + 6vh); }
+  .deco__item--rt { width: calc(var(--deco-w) * .62); aspect-ratio: 190 / 162; right: calc((var(--side) - var(--deco-w) * .62) / 2); top: 12vh; }
+  .deco__item--rb { width: var(--deco-w); aspect-ratio: 300 / 180; right: calc((var(--side) - var(--deco-w)) / 2); bottom: calc(var(--warn-b) + 5vh); }
 
   .toast { left: calc(50% + var(--group-w) / 2 - var(--scene-w) / 2); top: calc((100dvh - var(--warn-b) - var(--scene-h)) / 2 + 24px); }
 
