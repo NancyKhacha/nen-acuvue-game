@@ -486,7 +486,7 @@ sup.reg { position: relative; top: -.55em; font-size: .62em; line-height: 0; ver
 /* ---------- ДЕСКТОП: текст и картинка рядом по центру, декор в полях вокруг ---------- */
 @media (min-width: 960px) and (min-height: 600px) {
   :root {
-    --panel-w: clamp(340px, 29vw, 420px);
+    --panel-w: clamp(380px, 32vw, 470px);
     --gap: clamp(36px, 3.6vw, 60px);
     --warn-h: max(56px, 6.5vh);
     --scene-h: min(calc(100dvh - var(--warn-b) - 48px), 1100px);
@@ -514,8 +514,9 @@ sup.reg { position: relative; top: -.55em; font-size: .62em; line-height: 0; ver
     height: var(--scene-h);
     overflow-y: auto;
     scrollbar-width: thin;
-    padding: 4px 0;
-    background: none;
+    padding: clamp(16px, 2.9vh, 26px) clamp(22px, 2.2vw, 30px) clamp(14px, 2.4vh, 22px);
+    border-radius: 28px;
+    background: #fff;
     pointer-events: auto;
   }
 
@@ -537,7 +538,7 @@ sup.reg { position: relative; top: -.55em; font-size: .62em; line-height: 0; ver
   .logo--nen, .app[data-view="start"] .logo--nen { height: 28px; width: 62.5px; }
   .logo--x, .app[data-view="start"] .logo--x { height: 11px; width: 11px; color: var(--purple); }
   .brand__title { margin-top: 16px; font-size: 30px; color: var(--dpurple); }
-  .app[data-view="start"] .brand__title { margin-top: clamp(14px, 2.6vh, 24px); font-size: clamp(34px, min(4.4vw, 6vh), 68px); line-height: .95; white-space: normal; }
+  .app[data-view="start"] .brand__title { margin-top: clamp(14px, 2.6vh, 24px); font-size: clamp(32px, min(4vw, 5.4vh), 60px); line-height: .95; white-space: normal; }
 
 
   .view--start, .view--final {
@@ -555,13 +556,13 @@ sup.reg { position: relative; top: -.55em; font-size: .62em; line-height: 0; ver
   .lead--q { margin-bottom: 12px; }
   /* Первый экран: длинный текст клиента подстраиваем под высоту окна, чтобы кнопка не уходила вниз */
   .view--start { margin-top: clamp(12px, 2.4vh, 24px); }
-  .view--start .lead { font-size: clamp(13px, 1.9vh, 17px); line-height: 1.5; margin-bottom: clamp(8px, 1.4vh, 14px); }
+  .view--start .lead { font-size: clamp(13px, 1.75vh, 16.5px); line-height: 1.5; margin-bottom: clamp(8px, 1.4vh, 14px); }
   .view--start .btn { margin-top: clamp(6px, 1.2vh, 12px); }
   .view--final .lead { font-size: clamp(13px, 1.7vh, 15.5px); line-height: 1.5; margin-bottom: clamp(10px, 1.6vh, 18px); }
   .view--final { margin-top: clamp(12px, 2.4vh, 24px); }
   .view--final .title-l { margin-bottom: clamp(10px, 1.6vh, 16px); }
   .view--final .steps li { font-size: clamp(13px, 1.7vh, 15.5px); line-height: 1.45; }
-  .view--final .final__actions { --sticky-bg: var(--lav); bottom: -4px; margin: 0 0 14px; padding: 10px 0 8px; }
+  .view--final .final__actions { --sticky-bg: #fff; bottom: -22px; margin: 0 0 14px; padding: 10px 0 14px; }
   /* Картинка в карточке не съедает текст на невысоких экранах */
   .card__art:not(.card__art--pack) { max-height: min(240px, 26vh); }
   .title-l { font-size: 32px; margin-bottom: 16px; }
@@ -584,6 +585,7 @@ sup.reg { position: relative; top: -.55em; font-size: .62em; line-height: 0; ver
     flex: 1 1 auto; min-height: 260px;
     margin-top: 18px;
     border-radius: 22px;
+    border: 1.5px solid var(--line);   /* карточка внутри белой колонки */
     transform: none; transition: none;
   }
   .card.is-open { transform: none; animation: fadeUp .35s ease both; }
@@ -615,13 +617,10 @@ sup.reg { position: relative; top: -.55em; font-size: .62em; line-height: 0; ver
   }
   .app[data-view="start"] .scene__img { position: static; height: 100%; transform: none; }
 
-  /* Дорожки Abiliti в полях: слева и справа, сверху и снизу. Целиком, не залезают на текст и картинку */
-  .deco { display: block; position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-  .deco__item { position: absolute; display: block; height: auto; }
-  .deco__item--lt { width: var(--deco-w); aspect-ratio: 300 / 180; left: calc((var(--side) - var(--deco-w)) / 2); top: 9vh; }
-  .deco__item--lb { width: calc(var(--deco-w) * .62); aspect-ratio: 190 / 162; left: calc((var(--side) - var(--deco-w) * .62) / 2); bottom: calc(var(--warn-b) + 6vh); }
-  .deco__item--rt { width: calc(var(--deco-w) * .62); aspect-ratio: 190 / 162; right: calc((var(--side) - var(--deco-w) * .62) / 2); top: 12vh; }
-  .deco__item--rb { width: var(--deco-w); aspect-ratio: 300 / 180; right: calc((var(--side) - var(--deco-w)) / 2); bottom: calc(var(--warn-b) + 5vh); }
+  /* Фирменная графика Abiliti «paths» целиком: полоса во всю ширину по низу экрана, над плашкой с противопоказаниями */
+  .deco { display: block; position: fixed; left: 0; right: 0; bottom: var(--warn-b); z-index: 0; pointer-events: none;
+    height: min(calc(100vw * 383 / 1428), 46vh); }
+  .deco__band { display: block; width: 100%; height: 100%; }
 
   .toast { left: calc(50% + var(--group-w) / 2 - var(--scene-w) / 2); top: calc((100dvh - var(--warn-b) - var(--scene-h)) / 2 + 24px); }
 
