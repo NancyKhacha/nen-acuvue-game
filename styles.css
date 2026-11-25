@@ -682,3 +682,8 @@ sup.reg { position: relative; top: -.55em; font-size: .62em; line-height: 0; ver
   *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0ms !important; transition-duration: .01ms !important; }
   .confetti { display: none; }
 }
+
+/* Невысокий ноутбук: длинный текст первого экрана чуть плотнее, чтобы кнопка не уходила вниз */
+@media (min-width: 960px) and (min-height: 600px) and (max-height: 700px) {
+  .view--start .lead, .app[data-step] .view--start .lead--q { line-height: 1.4; margin-bottom: 6px; }
+}
